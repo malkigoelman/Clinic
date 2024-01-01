@@ -36,7 +36,7 @@ namespace Mirpaha.Controllers
             return Ok(d);
         }
         [HttpGet("{code}/specialization")]
-        public ActionResult<IEnumerable<Specialization>> GetSpecialization(int code)
+        public ActionResult<Specialization> GetSpecialization(int code)
         {
             Doctor d = _doctorService.GetDoctor(code);
             return d.specialization;

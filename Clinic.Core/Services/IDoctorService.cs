@@ -6,7 +6,7 @@ namespace Mirpaha.Clinic.Core.Services
     {
         IEnumerable<Doctor> GetDoctors();
         Doctor GetDoctor(int id);
-        IEnumerable<Specialization> GetSpecializations(int doctorId);
+        Specialization GetSpecializations(int doctorId);
         void AddDoctor(Doctor doctor);
         void RemoveDoctor(int doctorId);
         void UpdateDoctor(int doctorId,Doctor doctor);
