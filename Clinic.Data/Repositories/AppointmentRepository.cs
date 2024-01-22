@@ -11,19 +11,23 @@ namespace Mirpaha.Clinic.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public void AddAppointment(Appointment appointment)
+        public Appointment AddAppointment(Appointment appointment)
         {
             _dataContext.Appointments.Add(appointment);
+            _dataContext.SaveChanges();
+            return appointment;
         }
 
         public void DeleteAppointment(int id)
         {
-            _dataContext.Appointments.Remove(GetAppointmentById(id));
+            var appointment=GetAppointmentById(id);
+            _dataContext.Appointments.Remove(appointment);
+            _dataContext.SaveChanges();
         }
 
         public Appointment GetAppointmentById(int id)
         {
-            return _dataContext.Appointments.ToList().Find(a => a.Id == id);
+            return _dataContext.Appointments.Find(id);
         }
 
         public IEnumerable<Appointment> GetAppointments()
@@ -31,10 +35,18 @@ namespace Mirpaha.Clinic.Data.Repositories
             return _dataContext.Appointments.ToList();
         }
 
-        public void UpdateAppointment(int id, Appointment appointment)
+        public Appointment UpdateAppointment(int id, Appointment appointment)
         {
-            DeleteAppointment(id);
-            AddAppointment(appointment);
+            var appointment1 = GetAppointmentById(id);
+            appointment1.Treatment = appointment.Treatment;
+            appointment1.Price=appointment.Price;
+            appointment1.Date_Time = appointment.Date_Time;
+            appointment1.Duration = appointment.Duration;
+            appointment1.Room=appointment.Room;
+            appointment1.ClientId=appointment.ClientId;
+            appointment1.DoctorId=appointment.DoctorId;
+            _dataContext.SaveChanges();
+            return appointment1;
         }
     }
 }

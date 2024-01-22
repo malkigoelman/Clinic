@@ -7,7 +7,7 @@ namespace Mirpaha.Clinic.Core.Repositories
         IEnumerable<Client> GetClients();
         Client GetClientById(int id);
         void DeleteClient(int id);
-        void UpdateClient(int id,Client client);
-        void AddClient(Client client);
+        Client UpdateClient(int id,Client client);
+        Client AddClient(Client client);
     }
 }

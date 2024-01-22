@@ -4,7 +4,7 @@ using Mirpaha.Entities;
 //using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 namespace Mirpaha
 {
-    public class DataContext:DbContext
+    public class DataContext: DbContext
     {
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Client> Clients { get; set; }

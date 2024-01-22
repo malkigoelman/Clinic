@@ -12,9 +12,9 @@ namespace Mirpaha.Clinic.Service
             _doctorRepository = doctorRepository;
         }
 
-        public void AddDoctor(Doctor doctor)
+        public Doctor AddDoctor(Doctor doctor)
         {
-            _doctorRepository.AddDoctor(doctor);
+           return _doctorRepository.AddDoctor(doctor);
         }
 
         public Doctor GetDoctor(int id)
@@ -38,9 +38,9 @@ namespace Mirpaha.Clinic.Service
            _doctorRepository.DeleteDoctor(doctorId);
         }
 
-        public void UpdateDoctor(int doctorId, Doctor doctor)
+        public Doctor UpdateDoctor(int doctorId, Doctor doctor)
         {
-            _doctorRepository.UpdateDoctor(doctorId, doctor);
+           return _doctorRepository.UpdateDoctor(doctorId, doctor);
         }
     }
 }

@@ -14,7 +14,7 @@
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Payment { get; set; }
-        public List<Comment> Comments { get; set; }
+        //public List<Comment> Comments { get; set; }
     }
     public class Comment
     {

@@ -7,7 +7,7 @@ namespace Mirpaha.Clinic.Core.Repositories
         IEnumerable<Doctor> GetDoctors();
         Doctor GetDoctor(int id);
         void DeleteDoctor(int id);
-        void UpdateDoctor(int id,Doctor doctor);
-        void AddDoctor(Doctor doctor);    
+        Doctor UpdateDoctor(int id,Doctor doctor);
+        Doctor AddDoctor(Doctor doctor);    
     }
 }

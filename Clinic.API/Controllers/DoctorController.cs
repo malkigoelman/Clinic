@@ -44,20 +44,21 @@ namespace Mirpaha.Controllers
 
         // POST api/<DoctorController>
         [HttpPost]
-        public void Post([FromBody] Doctor doctor)
+        public ActionResult<Doctor> Post([FromBody] Doctor doctor)
         {
             _doctorService.AddDoctor(doctor);
+            return Ok(doctor);
         }
 
         // PUT api/<DoctorController>/5
         [HttpPut("{code}")]
-        public ActionResult Put(int code, [FromBody] Doctor doctor)
+        public ActionResult<Doctor> Put(int code, [FromBody] Doctor doctor)
         {
             Doctor doctor1 = _doctorService.GetDoctor(code);
             if (doctor1 == null)
                 NotFound();
             _doctorService.UpdateDoctor(code, doctor);
-            return Ok();
+            return Ok(doctor);
         }
 
         // DELETE api/<DoctorController>/5

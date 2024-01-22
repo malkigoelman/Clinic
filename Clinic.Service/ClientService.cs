@@ -17,10 +17,10 @@ namespace Mirpaha.Clinic.Service
             _clientRepository.AddClient(client);
         }
 
-        public void AddComments(int id, Comment comment)
-        {
-           _clientRepository.GetClientById(id).Comments.Add(comment);
-        }
+        //public void AddComments(int id, Comment comment)
+        //{
+        //   _clientRepository.GetClientById(id).Comments.Add(comment);
+        //}
 
         public void DeleteClient(int id)
         {

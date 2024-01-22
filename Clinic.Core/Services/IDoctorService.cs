@@ -7,8 +7,8 @@ namespace Mirpaha.Clinic.Core.Services
         IEnumerable<Doctor> GetDoctors();
         Doctor GetDoctor(int id);
         Specialization GetSpecializations(int doctorId);
-        void AddDoctor(Doctor doctor);
+        Doctor AddDoctor(Doctor doctor);
         void RemoveDoctor(int doctorId);
-        void UpdateDoctor(int doctorId,Doctor doctor);
+        Doctor UpdateDoctor(int doctorId,Doctor doctor);
     }
 }

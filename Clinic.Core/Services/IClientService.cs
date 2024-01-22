@@ -9,6 +9,6 @@ namespace Mirpaha.Clinic.Core.Services
         void DeleteClient(int id);
         void AddClient(Client client);
         void UpdateClient(int id,Client client);
-        void AddComments(int id,Comment comment);
+        //void AddComments(int id,Comment comment);
     }
 }

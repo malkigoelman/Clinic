@@ -40,15 +40,15 @@ namespace Mirpaha.Controllers
         {
             _clientService.AddClient(client);
         }
-        [HttpPost("{id}/comments")]
-        public ActionResult AddComment(int id, [FromBody] Comment comment)
-        {
-            Client client = _clientService.GetClientById(id);
-            if (client == null)
-                NotFound();
-            _clientService.AddComments(id, comment);
-            return Ok();
-        } 
+        //[HttpPost("{id}/comments")]
+        //public ActionResult AddComment(int id, [FromBody] Comment comment)
+        //{
+        //    Client client = _clientService.GetClientById(id);
+        //    if (client == null)
+        //        NotFound();
+        //    _clientService.AddComments(id, comment);
+        //    return Ok();
+        //} 
 
         // PUT api/<ClientController>/5
         [HttpPut("{id}")]

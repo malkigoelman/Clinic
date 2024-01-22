@@ -20,7 +20,7 @@
         //public List<Specialization> specialization { get; set; }
         public Specialization specialization { get; set; }
         public string Phone { get; set; }
-        public List<Shift> Shifts { get; set; }
+        // public List<Shift> Shifts { get; set; }
     }
     public class Shift
     {

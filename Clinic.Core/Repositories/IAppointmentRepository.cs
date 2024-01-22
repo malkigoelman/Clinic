@@ -6,8 +6,8 @@ namespace Mirpaha.Clinic.Core.Repositories
     {
         IEnumerable<Appointment> GetAppointments();
         Appointment GetAppointmentById(int id); 
-        void AddAppointment(Appointment appointment);
-        void UpdateAppointment(int id,Appointment appointment);
+        Appointment AddAppointment(Appointment appointment);
+        Appointment UpdateAppointment(int id,Appointment appointment);
         void DeleteAppointment(int id);
     }
 }
