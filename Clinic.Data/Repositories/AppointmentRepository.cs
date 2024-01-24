@@ -1,4 +1,5 @@
-﻿using Mirpaha.Clinic.Core.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Mirpaha.Clinic.Core.Repositories;
 using Mirpaha.Entities;
 
 namespace Mirpaha.Clinic.Data.Repositories
@@ -32,7 +33,7 @@ namespace Mirpaha.Clinic.Data.Repositories
 
         public IEnumerable<Appointment> GetAppointments()
         {
-            return _dataContext.Appointments.ToList();
+            return _dataContext.Appointments.Include(u => u.Doctor).Include(u=>u.Client);
         }
 
         public Appointment UpdateAppointment(int id, Appointment appointment)

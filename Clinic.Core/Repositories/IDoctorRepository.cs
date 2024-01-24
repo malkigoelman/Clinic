@@ -8,6 +8,8 @@ namespace Mirpaha.Clinic.Core.Repositories
         Doctor GetDoctor(int id);
         void DeleteDoctor(int id);
         Doctor UpdateDoctor(int id,Doctor doctor);
-        Doctor AddDoctor(Doctor doctor);    
+        Doctor AddDoctor(Doctor doctor);
+         IEnumerable<Shift> GetShifts(int id);
+         IEnumerable<Specialization> GetSpecializations(int id);
     }
 }

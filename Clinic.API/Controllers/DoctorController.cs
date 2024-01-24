@@ -39,7 +39,7 @@ namespace Mirpaha.Controllers
         public ActionResult<Specialization> GetSpecialization(int code)
         {
             Doctor d = _doctorService.GetDoctor(code);
-            return d.specialization;
+            return Ok( d.Specialization);
         }
 
         // POST api/<DoctorController>
@@ -70,6 +70,22 @@ namespace Mirpaha.Controllers
                 NotFound();
             _doctorService.RemoveDoctor(code);
             return Ok();
+        }
+        [HttpGet("{code}/specialization")]
+        public ActionResult<IEnumerable<Specialization>> GetSpacialization(int code)
+        {
+            Doctor doctor1 = _doctorService.GetDoctor(code);
+            if(doctor1 == null)
+                return NotFound();
+            return Ok(_doctorService.GetSpecializations(code));
+        }
+        [HttpGet("{code}/shifts")]
+        public ActionResult<IEnumerable<Shift>> GetShifts(int code)
+        {
+            Doctor doctor1 = _doctorService.GetDoctor(code);
+            if(doctor1 == null)
+                return NotFound();
+            return Ok(_doctorService.GetShifts(code));
         }
     }
 }

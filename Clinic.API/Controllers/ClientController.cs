@@ -29,7 +29,7 @@ namespace Mirpaha.Controllers
         public ActionResult<Client> Get(int id)
         {
             Client c = _clientService.GetClientById(id);
-            if(c==null)
+            if (c == null)
                 NotFound();
             return Ok(c);
         }
@@ -40,15 +40,15 @@ namespace Mirpaha.Controllers
         {
             _clientService.AddClient(client);
         }
-        //[HttpPost("{id}/comments")]
-        //public ActionResult AddComment(int id, [FromBody] Comment comment)
-        //{
-        //    Client client = _clientService.GetClientById(id);
-        //    if (client == null)
-        //        NotFound();
-        //    _clientService.AddComments(id, comment);
-        //    return Ok();
-        //} 
+        [HttpPost("{id}/comments")]
+        public ActionResult AddComment(int id, [FromBody] Comment comment)
+        {
+            Client client = _clientService.GetClientById(id);
+            if (client == null)
+                NotFound();
+            _clientService.AddComments(id, comment);
+            return Ok();
+        }
 
         // PUT api/<ClientController>/5
         [HttpPut("{id}")]
@@ -57,7 +57,7 @@ namespace Mirpaha.Controllers
             Client client1 = _clientService.GetClientById(id);
             if (client1 == null)
                 NotFound();
-            _clientService.UpdateClient(id,client);
+            _clientService.UpdateClient(id, client);
             return Ok();
         }
 
@@ -70,6 +70,14 @@ namespace Mirpaha.Controllers
                 NotFound();
             _clientService.DeleteClient(id);
             return Ok();
+        }
+        [HttpGet("{id}/comments")]
+        public ActionResult<IEnumerable<Comment>> GetComments(int id)
+        {
+            Client client = _clientService.GetClientById(id);
+            if (client == null)
+                return NotFound();
+            return Ok(_clientService.GetComments(id));
         }
     }
 }

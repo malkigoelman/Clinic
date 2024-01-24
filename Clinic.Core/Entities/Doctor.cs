@@ -1,26 +1,18 @@
 ﻿namespace Mirpaha.Entities
 {
-    public enum Specialization { General, Dentist, Ophthalmologist }
+    public enum SpecializationEnum { General, Dentist, Ophthalmologist }
     public enum Days { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday }
     public class Doctor
     {
-        private static int doctorId = 1;
-        public Doctor(int id,string name)
-        {
-                this.Id = id;
-            this.Name = name;
-            this.DoctorId= doctorId++;
-            //this.specialization = new List<Specialization>();
-        }
+        
         public int Id { get; set; }
-        public int DoctorId { get; set; }
+        public int Tz { get; set; }
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
-        //public List<Specialization> specialization { get; set; }
-        public Specialization specialization { get; set; }
+        public List<Specialization> Specialization { get; set; }
         public string Phone { get; set; }
-        // public List<Shift> Shifts { get; set; }
+        public List<Shift> Shifts { get; set; }
     }
     public class Shift
     {
@@ -28,6 +20,12 @@
         public Days Day { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public Doctor Doctor { get; set; }
+    }
+    public class Specialization
+    {
+        public int Id { get; set; }
+        public SpecializationEnum specialization { get; set; }
     }
 
 }

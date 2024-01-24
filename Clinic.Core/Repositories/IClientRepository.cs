@@ -9,5 +9,7 @@ namespace Mirpaha.Clinic.Core.Repositories
         void DeleteClient(int id);
         Client UpdateClient(int id,Client client);
         Client AddClient(Client client);
+        Comment AddComments(int id, Comment comment);
+        IEnumerable<Comment> GetAllComments(int id);
     }
 }

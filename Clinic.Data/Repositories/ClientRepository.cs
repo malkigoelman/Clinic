@@ -18,11 +18,26 @@ namespace Mirpaha.Clinic.Data.Repositories
             return client;
         }
 
+        public Comment AddComments(int id, Comment comment)
+        {
+           var client = _dataContext.Clients.Find(id);
+            client.Comments.Add(comment);
+            _dataContext.SaveChanges();
+            return comment;
+        }
+
         public void DeleteClient(int id)
         {
             var client = GetClientById(id);
             _dataContext.Clients.Remove(client);
             _dataContext.SaveChanges();
+        }
+
+        public IEnumerable<Comment> GetAllComments(int id)
+        {
+            var client = GetClientById(id);
+            return client.Comments;
+
         }
 
         public Client GetClientById(int id)
@@ -32,7 +47,7 @@ namespace Mirpaha.Clinic.Data.Repositories
 
         public IEnumerable<Client> GetClients()
         {
-            return _dataContext.Clients.ToList();
+            return _dataContext.Clients;
         }
 
         public Client UpdateClient(int id, Client client)

@@ -1,4 +1,5 @@
-﻿using Mirpaha.Clinic.Core.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Mirpaha.Clinic.Core.Repositories;
 using Mirpaha.Clinic.Core.Services;
 using Mirpaha.Entities;
 
@@ -33,29 +34,29 @@ namespace Mirpaha.Clinic.Data.Repositories
 
         public IEnumerable<Doctor> GetDoctors()
         {
-            return _dataContext.Doctors.ToList();
+            return _dataContext.Doctors.Include(u => u.Shifts).Include(u => u.Specialization);
         }
 
         public Doctor UpdateDoctor(int id, Doctor doctor)
         {
             var doctor1 = GetDoctor(id);
-            doctor1.DoctorId = doctor.DoctorId;
+            doctor1.Tz = doctor.Tz;
             doctor1.Name = doctor.Name;
-            doctor1.specialization = doctor.specialization;
+            doctor1.Specialization = doctor.Specialization;
             doctor1.Birthday = doctor.Birthday;
             doctor1.Address = doctor.Address;
             doctor1.Phone = doctor.Phone;
             _dataContext.SaveChanges();
             return doctor1;
-            //doctor1 = doctor;
-            //_dataContext.SaveChanges();
-            //return doctor1;
-            //DeleteDoctor(id);
-            //return AddDoctor(doctor);
-            //_dataContext.SaveChanges();
-            //_dataContext.Doctors.Update(doctor);
-            //_dataContext.SaveChanges();
-            //return doctor;
+        }
+
+        public IEnumerable<Shift> GetShifts(int id)
+        {
+            return _dataContext.Doctors.Find(id).Shifts;
+        }
+        public IEnumerable<Specialization> GetSpecializations(int id)
+        {
+            return _dataContext.Doctors.Find(id).Specialization;
         }
     }
 }

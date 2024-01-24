@@ -27,10 +27,14 @@ namespace Mirpaha.Clinic.Service
             return _doctorRepository.GetDoctors();
         }
 
-        public Specialization GetSpecializations(int doctorId)
+        public IEnumerable<Shift> GetShifts(int doctorId)
         {
-            Doctor d=GetDoctor(doctorId);
-            return d.specialization;
+            return _doctorRepository.GetShifts(doctorId);
+        }
+
+        public IEnumerable<Specialization> GetSpecializations(int doctorId)
+        {
+            return _doctorRepository.GetSpecializations(doctorId);
         }
 
         public void RemoveDoctor(int doctorId)

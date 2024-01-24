@@ -8,7 +8,8 @@ namespace Mirpaha.Clinic.Core.Services
         Client GetClientById(int id);
         void DeleteClient(int id);
         void AddClient(Client client);
-        void UpdateClient(int id,Client client);
-        //void AddComments(int id,Comment comment);
+        void UpdateClient(int id, Client client);
+        void AddComments(int id, Comment comment);
+        IEnumerable<Comment> GetComments(int id);
     }
 }
