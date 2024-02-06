@@ -40,7 +40,7 @@ namespace Mirpaha.Clinic.Data.Repositories
         public Doctor UpdateDoctor(int id, Doctor doctor)
         {
             var doctor1 = GetDoctor(id);
-            doctor1.Tz = doctor.Tz;
+            doctor1.TzNumber = doctor.TzNumber;
             doctor1.Name = doctor.Name;
             doctor1.Specialization = doctor.Specialization;
             doctor1.Birthday = doctor.Birthday;

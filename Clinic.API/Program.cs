@@ -5,6 +5,8 @@ using Mirpaha.Clinic.Data.Repositories;
 using Mirpaha.Clinic.Service;
 using Mirpaha.Clinic.Core.Services;
 using System.Text.Json.Serialization;
+using Clinic.API.Mapping;
+using Clinic.Core;
 
 namespace Mirpaha.Clinic.API
 {
@@ -34,6 +36,7 @@ namespace Mirpaha.Clinic.API
             builder.Services.AddScoped<IDoctorService, DoctorService>();
             builder.Services.AddScoped<IClientService, ClientService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(ApiMappingProfile));
 
 
             //להוסיף כאן

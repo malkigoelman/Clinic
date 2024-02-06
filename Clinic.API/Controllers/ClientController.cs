@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Clinic.API.Model;
+using Clinic.Core.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Mirpaha.Clinic.Core.Services;
 using Mirpaha.Entities;
 
@@ -12,53 +15,61 @@ namespace Mirpaha.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;
-        public ClientController(IClientService clientService)
+        private readonly IMapper _mapper;
+        public ClientController(IClientService clientService,IMapper mapper)
         {
             _clientService = clientService;
+            _mapper = mapper;
         }
 
         // GET: api/<ClientController>
         [HttpGet]
-        public ActionResult<IEnumerable<Client>> Get()
+        public ActionResult<IEnumerable<ClientDTO>> Get()
         {
-            return Ok(_clientService.GetClients());
+            var list=_clientService.GetClients();
+            var listDTO = list.Select(c => _mapper.Map<ClientDTO>(c));
+            return Ok(listDTO);
         }
 
         // GET api/<ClientController>/5
         [HttpGet("{id}")]
-        public ActionResult<Client> Get(int id)
+        public ActionResult<ClientDTO> Get(int id)
         {
-            Client c = _clientService.GetClientById(id);
+            var c = _clientService.GetClientById(id);
             if (c == null)
                 NotFound();
-            return Ok(c);
+            var cDTO= _mapper.Map<ClientDTO>(c);
+            return Ok(cDTO);
         }
 
         // POST api/<ClientController>
         [HttpPost]
-        public void Post([FromBody] Client client)
+        public void Post([FromBody] ClientPostModel client)
         {
-            _clientService.AddClient(client);
+            var c=_mapper.Map<Client>(client);
+            _clientService.AddClient(c);
+
         }
         [HttpPost("{id}/comments")]
-        public ActionResult AddComment(int id, [FromBody] Comment comment)
+        public ActionResult AddComment(int id, [FromBody] CommentPostModel comment)
         {
-            Client client = _clientService.GetClientById(id);
+            var client = _clientService.GetClientById(id);
             if (client == null)
                 NotFound();
-            _clientService.AddComments(id, comment);
+            _clientService.AddComments(id, _mapper.Map<Comment>(comment));
             return Ok();
         }
 
         // PUT api/<ClientController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Client client)
+        public ActionResult Put(int id, [FromBody] ClientPostModel client)
         {
-            Client client1 = _clientService.GetClientById(id);
+            var client1 = _clientService.GetClientById(id);
             if (client1 == null)
                 NotFound();
-            _clientService.UpdateClient(id, client);
-            return Ok();
+            _mapper.Map(client, client1);
+            _clientService.UpdateClient(id, client1);
+            return Ok(_mapper.Map<ClientDTO>(client1));
         }
 
         // DELETE api/<ClientController>/5

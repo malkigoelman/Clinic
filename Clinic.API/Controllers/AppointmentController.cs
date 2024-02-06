@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Clinic.API.Model;
+using Clinic.Core.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mirpaha.Clinic.Core.Services;
 using Mirpaha.Entities;
 
@@ -14,53 +18,69 @@ namespace Mirpaha.Controllers
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        public AppointmentController(IAppointmentService appointmentService)
+        private readonly IDoctorService _doctorService;
+        private readonly IMapper _mapper;
+        public AppointmentController(IAppointmentService appointmentService,IMapper mapper,IDoctorService doctorService)
         {
             _appointmentService = appointmentService;
+            _mapper = mapper;   
+            _doctorService = doctorService;
         }
 
         // GET: api/<AppointmentController>
         [HttpGet]
-        public ActionResult<IEnumerable<Appointment>> Get()
+        public ActionResult<IEnumerable<AppointmentDTO>> Get()
         {
-            return Ok(_appointmentService.GetAppointments());
+            var list = _appointmentService.GetAppointments();
+            var listDTO = list.Select(a => _mapper.Map<AppointmentDTO>(a));
+            return Ok(listDTO);
         }
 
         // GET api/<AppointmentController>/5
         [HttpGet("clients/{clientId}")]
-        public ActionResult<IEnumerable<Appointment>>  GetByClient(int clientId)
+        public ActionResult<IEnumerable<AppointmentDTO>>  GetByClient(int clientId)
         {
-            List<Appointment> p= _appointmentService.GetAppointmentsByClientId(clientId).ToList();
+            var p= _appointmentService.GetAppointmentsByClientId(clientId);
             if (p.Count() == 0)
                 NotFound();
-            return Ok(p);
+            var pDTO = p.Select(a=>_mapper.Map<AppointmentDTO>(a));
+            return Ok(pDTO);
         }
         // GET api/<AppointmentController>/5
         [HttpGet("{id}")]
-        public ActionResult<Appointment> Get(int id)
+        public ActionResult<AppointmentDTO> Get(int id)
         {
-            Appointment p = _appointmentService.GetAppointment(id);
+            var p = _appointmentService.GetAppointment(id);
             if (p == null)
                 NotFound();
-            return Ok(p);
+            var pDTO = _mapper.Map<AppointmentDTO>(p);
+            return Ok(pDTO);
         }
 
         // POST api/<AppointmentController>
         [HttpPost]
-        public void Post([FromBody] Appointment appointment)
+        public ActionResult Post([FromBody] AppointmentPostModel appointment)
         {
-            _appointmentService.AddAppointment(appointment);
+            var appointmentToAdd = _mapper.Map<Appointment>(appointment);
+            
+            var spec = _doctorService.GetSpecializations(appointmentToAdd.DoctorId).First(s => s.Id == appointment.TreatmentId);
+            if (spec == null)
+                return NotFound();
+            appointmentToAdd.Treatment = spec;
+            _appointmentService.AddAppointment(appointmentToAdd);
+            return Ok(_mapper.Map<AppointmentDTO>(appointmentToAdd));
         }
 
         // PUT api/<AppointmentController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Appointment appointment)
         {
-            Appointment appointment1 = _appointmentService.GetAppointment(id);
+            var appointment1 = _appointmentService.GetAppointment(id);
             if(appointment1==null)
                 NotFound();
-            _appointmentService.UpdateAppointment(id, appointment);
-            return Ok();
+            _mapper.Map(appointment,appointment1);
+            _appointmentService.UpdateAppointment(id, appointment1);
+            return Ok(_mapper.Map<AppointmentDTO>(appointment1));
         }
 
         // DELETE api/<AppointmentController>/5

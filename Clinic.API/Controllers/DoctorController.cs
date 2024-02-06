@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Clinic.Core.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Mirpaha.Clinic.Core.Services;
 using Mirpaha.Entities;
 using System.Drawing;
@@ -14,51 +16,59 @@ namespace Mirpaha.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorService _doctorService;
-        public DoctorController(IDoctorService doctorService)
+        private readonly IMapper _mapper;
+        public DoctorController(IDoctorService doctorService,IMapper mapper)
         {
             _doctorService = doctorService;
+            _mapper = mapper;
         }
 
         // GET: api/<DoctorController>
         [HttpGet]
-        public ActionResult<IEnumerable<Doctor>> Get()
+        public ActionResult<IEnumerable<DoctorDTO>> Get()
         {
-            return Ok(_doctorService.GetDoctors());
+            var list=_doctorService.GetDoctors();
+            var listdto = _mapper.Map<IEnumerable<DoctorDTO>>(list);
+            return Ok(listdto);
         }
 
         // GET api/<DoctorController>/5
         [HttpGet("{code}")]
-        public ActionResult<Doctor> Get(int code)
+        public ActionResult<DoctorDTO> Get(int code)
         {
-            Doctor d = _doctorService.GetDoctor(code);
+            var d = _doctorService.GetDoctor(code);
             if (d == null)
                 NotFound();
-            return Ok(d);
+            var ddto=_mapper.Map<DoctorDTO>(d);
+            return Ok(ddto);
         }
         [HttpGet("{code}/specialization")]
-        public ActionResult<Specialization> GetSpecialization(int code)
+        public ActionResult<IEnumerable<Specialization>> GetSpacialization(int code)
         {
-            Doctor d = _doctorService.GetDoctor(code);
-            return Ok( d.Specialization);
+            Doctor doctor1 = _doctorService.GetDoctor(code);
+            if(doctor1 == null)
+                return NotFound();
+            return Ok(_doctorService.GetSpecializations(code));
         }
-
         // POST api/<DoctorController>
         [HttpPost]
-        public ActionResult<Doctor> Post([FromBody] Doctor doctor)
+        public ActionResult<DoctorDTO> Post([FromBody] DoctorDTO doctor)
         {
-            _doctorService.AddDoctor(doctor);
+            var doctor1=_mapper.Map<Doctor>(doctor);
+            _doctorService.AddDoctor(doctor1);
             return Ok(doctor);
         }
 
         // PUT api/<DoctorController>/5
         [HttpPut("{code}")]
-        public ActionResult<Doctor> Put(int code, [FromBody] Doctor doctor)
+        public ActionResult<DoctorDTO> Put(int code, [FromBody] DoctorDTO doctor)
         {
-            Doctor doctor1 = _doctorService.GetDoctor(code);
+            var doctor1 = _doctorService.GetDoctor(code);
             if (doctor1 == null)
                 NotFound();
-            _doctorService.UpdateDoctor(code, doctor);
-            return Ok(doctor);
+            _mapper.Map(doctor,doctor1);
+            _doctorService.UpdateDoctor(code, doctor1);
+            return Ok(doctor1);
         }
 
         // DELETE api/<DoctorController>/5
@@ -70,14 +80,6 @@ namespace Mirpaha.Controllers
                 NotFound();
             _doctorService.RemoveDoctor(code);
             return Ok();
-        }
-        [HttpGet("{code}/specialization")]
-        public ActionResult<IEnumerable<Specialization>> GetSpacialization(int code)
-        {
-            Doctor doctor1 = _doctorService.GetDoctor(code);
-            if(doctor1 == null)
-                return NotFound();
-            return Ok(_doctorService.GetSpecializations(code));
         }
         [HttpGet("{code}/shifts")]
         public ActionResult<IEnumerable<Shift>> GetShifts(int code)

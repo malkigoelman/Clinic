@@ -12,8 +12,8 @@ using Mirpaha;
 namespace Clinic.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240124202723_MigrationName")]
-    partial class MigrationName
+    [Migration("20240206184722_spe...")]
+    partial class spe
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -133,9 +133,6 @@ namespace Clinic.Data.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -143,6 +140,9 @@ namespace Clinic.Data.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TzNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -187,8 +187,9 @@ namespace Clinic.Data.Migrations
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("specialization")
-                        .HasColumnType("int");
+                    b.Property<string>("specialization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -245,7 +246,7 @@ namespace Clinic.Data.Migrations
             modelBuilder.Entity("Mirpaha.Entities.Specialization", b =>
                 {
                     b.HasOne("Mirpaha.Entities.Doctor", null)
-                        .WithMany("specialization")
+                        .WithMany("Specialization")
                         .HasForeignKey("DoctorId");
                 });
 
@@ -258,7 +259,7 @@ namespace Clinic.Data.Migrations
                 {
                     b.Navigation("Shifts");
 
-                    b.Navigation("specialization");
+                    b.Navigation("Specialization");
                 });
 #pragma warning restore 612, 618
         }

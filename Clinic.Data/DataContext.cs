@@ -13,7 +13,7 @@ namespace Mirpaha
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=sample_db");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=sample1_db");
             optionsBuilder.LogTo(m=>Debug.WriteLine(m));    
         }
 
