@@ -9,11 +9,10 @@ namespace Clinic.Core.DTOs
 {
     public class DoctorDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         //public DateTime Birthday { get; set; }
         public string Address { get; set; }
-        public List<Specialization> Specialization { get; set; }
+        //public List<Specialization> Specialization { get; set; }
         public string Phone { get; set; }
     }
 }

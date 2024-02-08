@@ -62,11 +62,15 @@ namespace Mirpaha.Controllers
         public ActionResult Post([FromBody] AppointmentPostModel appointment)
         {
             var appointmentToAdd = _mapper.Map<Appointment>(appointment);
-            
-            var spec = _doctorService.GetSpecializations(appointmentToAdd.DoctorId).First(s => s.Id == appointment.TreatmentId);
-            if (spec == null)
-                return NotFound();
-            appointmentToAdd.Treatment = spec;
+            //לשלוף את הדוקטור
+            //לשלוף את הלקוח
+            //לשלוף את ההתמחות
+            //לשייך את כל אלה לפגישה
+            appointmentToAdd.Doctor = doctor;
+            //var spec = _doctorService.GetSpecializations(appointmentToAdd.DoctorId).First(s => s.Id == appointment.TreatmentId);
+            //if (spec == null)
+            //    return NotFound();
+            //appointmentToAdd.Treatment = spec;
             _appointmentService.AddAppointment(appointmentToAdd);
             return Ok(_mapper.Map<AppointmentDTO>(appointmentToAdd));
         }

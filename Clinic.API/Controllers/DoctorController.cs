@@ -28,7 +28,8 @@ namespace Mirpaha.Controllers
         public ActionResult<IEnumerable<DoctorDTO>> Get()
         {
             var list=_doctorService.GetDoctors();
-            var listdto = _mapper.Map<IEnumerable<DoctorDTO>>(list);
+            //var listdto = _mapper.Map<IEnumerable<DoctorDTO>>(list);
+            var listdto = list.Select(d => _mapper.Map<DoctorDTO>(d));
             return Ok(listdto);
         }
 
@@ -46,7 +47,7 @@ namespace Mirpaha.Controllers
         public ActionResult<IEnumerable<Specialization>> GetSpacialization(int code)
         {
             Doctor doctor1 = _doctorService.GetDoctor(code);
-            if(doctor1 == null)
+            if(doctor1 == null || doctor1.Specialization == null)
                 return NotFound();
             return Ok(_doctorService.GetSpecializations(code));
         }
