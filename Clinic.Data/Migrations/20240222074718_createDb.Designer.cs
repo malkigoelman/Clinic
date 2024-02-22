@@ -12,8 +12,8 @@ using Mirpaha;
 namespace Clinic.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240206184722_spe...")]
-    partial class spe
+    [Migration("20240222074718_createDb")]
+    partial class createDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

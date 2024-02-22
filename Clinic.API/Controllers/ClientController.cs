@@ -24,18 +24,18 @@ namespace Mirpaha.Controllers
 
         // GET: api/<ClientController>
         [HttpGet]
-        public ActionResult<IEnumerable<ClientDTO>> Get()
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> Get()
         {
-            var list=_clientService.GetClients();
+            var list=await _clientService.GetClientsAsync();
             var listDTO = list.Select(c => _mapper.Map<ClientDTO>(c));
             return Ok(listDTO);
         }
 
         // GET api/<ClientController>/5
         [HttpGet("{id}")]
-        public ActionResult<ClientDTO> Get(int id)
+        public async Task<ActionResult<ClientDTO>> Get(int id)
         {
-            var c = _clientService.GetClientById(id);
+            var c =await _clientService.GetClientByIdAsync(id);
             if (c == null)
                 NotFound();
             var cDTO= _mapper.Map<ClientDTO>(c);
@@ -44,51 +44,51 @@ namespace Mirpaha.Controllers
 
         // POST api/<ClientController>
         [HttpPost]
-        public void Post([FromBody] ClientPostModel client)
+        public async Task Post([FromBody] ClientPostModel client)
         {
             var c=_mapper.Map<Client>(client);
-            _clientService.AddClient(c);
+          await  _clientService.AddClientAsync(c);
 
         }
         [HttpPost("{id}/comments")]
-        public ActionResult AddComment(int id, [FromBody] CommentPostModel comment)
+        public async Task<ActionResult> AddComment(int id, [FromBody] CommentPostModel comment)
         {
-            var client = _clientService.GetClientById(id);
+            var client =await _clientService.GetClientByIdAsync(id);
             if (client == null)
                 NotFound();
-            _clientService.AddComments(id, _mapper.Map<Comment>(comment));
+           await _clientService.AddCommentsAsync(id, _mapper.Map<Comment>(comment));
             return Ok();
         }
 
         // PUT api/<ClientController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] ClientPostModel client)
+        public async Task<ActionResult> Put(int id, [FromBody] ClientPostModel client)
         {
-            var client1 = _clientService.GetClientById(id);
+            var client1 =await _clientService.GetClientByIdAsync(id);
             if (client1 == null)
                 NotFound();
             _mapper.Map(client, client1);
-            _clientService.UpdateClient(id, client1);
+           await _clientService.UpdateClientAsync(id, client1);
             return Ok(_mapper.Map<ClientDTO>(client1));
         }
 
         // DELETE api/<ClientController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            Client client1 = _clientService.GetClientById(id);
+            Client client1 =await _clientService.GetClientByIdAsync(id);
             if (client1 == null)
                 NotFound();
-            _clientService.DeleteClient(id);
+             await _clientService.DeleteClientAsync(id);
             return Ok();
         }
         [HttpGet("{id}/comments")]
-        public ActionResult<IEnumerable<Comment>> GetComments(int id)
+        public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
         {
-            Client client = _clientService.GetClientById(id);
+            Client client =await _clientService.GetClientByIdAsync(id);
             if (client == null)
                 return NotFound();
-            return Ok(_clientService.GetComments(id));
+            return  Ok(await _clientService.GetCommentsAsync(id));
         }
     }
 }

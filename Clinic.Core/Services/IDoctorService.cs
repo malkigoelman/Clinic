@@ -4,13 +4,13 @@ namespace Mirpaha.Clinic.Core.Services
 {
     public interface IDoctorService
     {
-        IEnumerable<Doctor> GetDoctors();
-        Doctor GetDoctor(int id);
-        IEnumerable<Specialization> GetSpecializations(int doctorId);
-        IEnumerable<Shift> GetShifts(int doctorId);
-        Doctor AddDoctor(Doctor doctor);
-        void RemoveDoctor(int doctorId);
-        Doctor UpdateDoctor(int doctorId,Doctor doctor);
+        Task<IEnumerable<Doctor>> GetDoctorsAsync();
+        Task<Doctor> GetDoctorAsync(int id);
+        Task<IEnumerable<Specialization>> GetSpecializationsAsync(int doctorId);
+        Task<IEnumerable<Shift>> GetShiftsAsync(int doctorId);
+        Task<Doctor> AddDoctorAsync(Doctor doctor);
+        Task RemoveDoctorAsync(int doctorId);
+        Task<Doctor> UpdateDoctorAsync(int doctorId,Doctor doctor);
 
     }
 }

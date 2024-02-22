@@ -4,10 +4,10 @@ namespace Mirpaha.Clinic.Core.Repositories
 {
     public interface IAppointmentRepository
     {
-        IEnumerable<Appointment> GetAppointments();
-        Appointment GetAppointmentById(int id); 
-        Appointment AddAppointment(Appointment appointment);
-        Appointment UpdateAppointment(int id,Appointment appointment);
-        void DeleteAppointment(int id);
+        Task<IEnumerable<Appointment>> GetAppointmentsAsync();
+        Task<Appointment> GetAppointmentByIdAsync(int id);
+        Task<Appointment> AddAppointmentAsync(Appointment appointment);
+        Task<Appointment> UpdateAppointmentAsync(int id, Appointment appointment);
+        Task DeleteAppointmentAsync(int id);
     }
 }

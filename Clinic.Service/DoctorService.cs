@@ -12,39 +12,39 @@ namespace Mirpaha.Clinic.Service
             _doctorRepository = doctorRepository;
         }
 
-        public Doctor AddDoctor(Doctor doctor)
+        public async Task<Doctor> AddDoctorAsync(Doctor doctor)
         {
-           return _doctorRepository.AddDoctor(doctor);
+           return await _doctorRepository.AddDoctorAsync(doctor);
         }
 
-        public Doctor GetDoctor(int id)
+        public async Task<Doctor> GetDoctorAsync(int id)
         {
-           return _doctorRepository.GetDoctor(id);
+           return await _doctorRepository.GetDoctorAsync(id);
         }
 
-        public IEnumerable<Doctor> GetDoctors()
+        public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
         {
-            return _doctorRepository.GetDoctors();
+            return await _doctorRepository.GetDoctorsAsync();
         }
 
-        public IEnumerable<Shift> GetShifts(int doctorId)
+        public async Task<IEnumerable<Shift>> GetShiftsAsync(int doctorId)
         {
-            return _doctorRepository.GetShifts(doctorId);
+            return await _doctorRepository.GetShiftsAsync(doctorId);
         }
 
-        public IEnumerable<Specialization> GetSpecializations(int doctorId)
+        public async Task<IEnumerable<Specialization>> GetSpecializationsAsync(int doctorId)
         {
-            return _doctorRepository.GetSpecializations(doctorId);
+            return  await _doctorRepository.GetSpecializationsAsync(doctorId);
         }
 
-        public void RemoveDoctor(int doctorId)
+        public async Task RemoveDoctorAsync(int doctorId)
         {
-           _doctorRepository.DeleteDoctor(doctorId);
+           await _doctorRepository.DeleteDoctorAsync(doctorId);
         }
 
-        public Doctor UpdateDoctor(int doctorId, Doctor doctor)
+        public async Task<Doctor> UpdateDoctorAsync(int doctorId, Doctor doctor)
         {
-           return _doctorRepository.UpdateDoctor(doctorId, doctor);
+           return await _doctorRepository.UpdateDoctorAsync(doctorId, doctor);
         }
     }
 }

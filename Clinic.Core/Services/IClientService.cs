@@ -4,12 +4,12 @@ namespace Mirpaha.Clinic.Core.Services
 {
     public interface IClientService
     {
-        IEnumerable<Client> GetClients();
-        Client GetClientById(int id);
-        void DeleteClient(int id);
-        void AddClient(Client client);
-        void UpdateClient(int id, Client client);
-        void AddComments(int id, Comment comment);
-        IEnumerable<Comment> GetComments(int id);
+        Task<IEnumerable<Client>> GetClientsAsync();
+        Task<Client> GetClientByIdAsync(int id);
+        Task DeleteClientAsync(int id);
+        Task AddClientAsync(Client client);
+        Task UpdateClientAsync(int id, Client client);
+        Task AddCommentsAsync(int id, Comment comment);
+        Task<IEnumerable<Comment>> GetCommentsAsync(int id);
     }
 }

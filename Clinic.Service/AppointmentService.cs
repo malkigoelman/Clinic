@@ -11,34 +11,34 @@ namespace Mirpaha.Clinic.Service
         {
             _appointmentRepository = appointmentRepository;
         }
-        public void AddAppointment(Appointment appointment)
+        public async Task AddAppointmentAsync(Appointment appointment)
         {
-            _appointmentRepository.AddAppointment(appointment);
+           await  _appointmentRepository.AddAppointmentAsync(appointment);
         }
 
-        public Appointment GetAppointment(int id)
+        public async Task<Appointment> GetAppointmentAsync(int id)
         {
-            return _appointmentRepository.GetAppointmentById(id);
+            return await _appointmentRepository.GetAppointmentByIdAsync(id);
         }
 
-        public IEnumerable<Appointment> GetAppointments()
+        public async Task<IEnumerable<Appointment>> GetAppointmentsAsync()
         {
-            return _appointmentRepository.GetAppointments();
+            return await _appointmentRepository.GetAppointmentsAsync();
         }
 
-        public IEnumerable<Appointment> GetAppointmentsByClientId(int clientId)
+        public async Task<IEnumerable<Appointment>> GetAppointmentsByClientIdAsync(int clientId)
         {
-            return GetAppointments().ToList().FindAll(a => a.ClientId == clientId);
+            return  GetAppointmentsAsync().Result.ToList().FindAll(a => a.ClientId == clientId);
         }
 
-        public void RemoveAppointment(int id)
+        public async Task RemoveAppointmentAsync(int id)
         {
-            _appointmentRepository.DeleteAppointment(id);
+          await  _appointmentRepository.DeleteAppointmentAsync(id);
         }
 
-        public void UpdateAppointment(int id, Appointment appointment)
+        public async Task UpdateAppointmentAsync(int id, Appointment appointment)
         {
-            _appointmentRepository.UpdateAppointment(id, appointment);
+           await _appointmentRepository.UpdateAppointmentAsync(id, appointment);
         }
     }
 }

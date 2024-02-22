@@ -1,4 +1,5 @@
-﻿using Mirpaha.Clinic.Core.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Mirpaha.Clinic.Core.Repositories;
 using Mirpaha.Entities;
 
 namespace Mirpaha.Clinic.Data.Repositories
@@ -11,54 +12,54 @@ namespace Mirpaha.Clinic.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public Client AddClient(Client client)
+        public async Task<Client> AddClientAsync(Client client)
         {
             _dataContext.Clients.Add(client);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
             return client;
         }
 
-        public Comment AddComments(int id, Comment comment)
+        public async Task<Comment> AddCommentsAsync(int id, Comment comment)
         {
-           var client = _dataContext.Clients.Find(id);
+            var client = _dataContext.Clients.Find(id);
             client.Comments.Add(comment);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
             return comment;
         }
 
-        public void DeleteClient(int id)
+        public async Task DeleteClientAsync(int id)
         {
-            var client = GetClientById(id);
+            var client =await GetClientByIdAsync(id);
             _dataContext.Clients.Remove(client);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
         }
 
-        public IEnumerable<Comment> GetAllComments(int id)
+        public async Task<IEnumerable<Comment>> GetAllCommentsAsync(int id)
         {
-            var client = GetClientById(id);
+            var client = await GetClientByIdAsync(id);
             return client.Comments;
 
         }
 
-        public Client GetClientById(int id)
+        public async Task<Client> GetClientByIdAsync(int id)
         {
-            return _dataContext.Clients.Find(id);
+            return await _dataContext.Clients.FindAsync(id);
         }
 
-        public IEnumerable<Client> GetClients()
+        public async Task<IEnumerable<Client>> GetClientsAsync()
         {
-            return _dataContext.Clients;
+            return await _dataContext.Clients.ToListAsync();
         }
 
-        public Client UpdateClient(int id, Client client)
+        public async Task<Client> UpdateClientAsync(int id, Client client)
         {
-            var client1 = GetClientById(id);
-            client1.Id=client.Id;
-            client1.Name=client.Name;
-            client1.Address=client.Address;
-            client1.Payment=client.Payment;
-            client1.Phone=client.Phone;
-            _dataContext.SaveChanges();
+            var client1 = await GetClientByIdAsync(id);
+            client1.Id = client.Id;
+            client1.Name = client.Name;
+            client1.Address = client.Address;
+            client1.Payment = client.Payment;
+            client1.Phone = client.Phone;
+            await _dataContext.SaveChangesAsync();
             return client1;
         }
     }

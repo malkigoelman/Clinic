@@ -10,6 +10,7 @@ namespace Mirpaha
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Specialization> Specialization { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -13,50 +13,50 @@ namespace Mirpaha.Clinic.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public Doctor AddDoctor(Doctor doctor)
+        public async Task<Doctor> AddDoctorAsync(Doctor doctor)
         {
-            _dataContext.Doctors.Add(doctor);
-            _dataContext.SaveChanges();
+           await _dataContext.Doctors.AddAsync(doctor);
+           await _dataContext.SaveChangesAsync();
             return doctor;
         }
 
-        public void DeleteDoctor(int id)
+        public async Task DeleteDoctorAsync(int id)
         {
-            var doctor = GetDoctor(id);
+            var doctor =await GetDoctorAsync(id);
             _dataContext.Doctors.Remove(doctor);
-            _dataContext.SaveChanges();
+          await  _dataContext.SaveChangesAsync();
         }
 
-        public Doctor GetDoctor(int id)
+        public async Task<Doctor> GetDoctorAsync(int id)
         {
-            return _dataContext.Doctors.Find(id);
+            return await _dataContext.Doctors.FindAsync(id);
         }
 
-        public IEnumerable<Doctor> GetDoctors()
+        public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
         {
-            return _dataContext.Doctors.Include(u => u.Shifts).Include(u => u.Specialization);
+            return await _dataContext.Doctors.Include(u => u.Shifts).Include(u => u.Specialization).ToListAsync();
         }
 
-        public Doctor UpdateDoctor(int id, Doctor doctor)
+        public async Task<Doctor> UpdateDoctorAsync(int id, Doctor doctor)
         {
-            var doctor1 = GetDoctor(id);
+            var doctor1 =await GetDoctorAsync(id);
             doctor1.TzNumber = doctor.TzNumber;
             doctor1.Name = doctor.Name;
             doctor1.Specialization = doctor.Specialization;
             doctor1.Birthday = doctor.Birthday;
             doctor1.Address = doctor.Address;
             doctor1.Phone = doctor.Phone;
-            _dataContext.SaveChanges();
+          await  _dataContext.SaveChangesAsync();
             return doctor1;
         }
 
-        public IEnumerable<Shift> GetShifts(int id)
+        public async Task<IEnumerable<Shift>> GetShiftsAsync(int id)
         {
-            return _dataContext.Doctors.Find(id).Shifts;
+            return  _dataContext.Doctors.FindAsync(id).Result.Shifts;
         }
-        public IEnumerable<Specialization> GetSpecializations(int id)
+        public async Task<IEnumerable<Specialization>> GetSpecializationsAsync(int id)
         {
-            return _dataContext.Doctors.Find(id).Specialization;
+            return await _dataContext.Specialization.ToListAsync();//.Where(s => s.Doctor.Id == id);
         }
     }
 }

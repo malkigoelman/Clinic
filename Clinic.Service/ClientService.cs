@@ -12,38 +12,39 @@ namespace Mirpaha.Clinic.Service
             _clientRepository = clientRepository;
         }
 
-        public void AddClient(Client client)
+        public async Task AddClientAsync(Client client)
         {
-            _clientRepository.AddClient(client);
+            await _clientRepository.AddClientAsync(client);
         }
 
-        public void AddComments(int id, Comment comment)
+        public async Task AddCommentsAsync(int id, Comment comment)
         {
-            _clientRepository.GetClientById(id).Comments.Add(comment);
+            var clietn = await _clientRepository.GetClientByIdAsync(id);
+            clietn.Comments.Add(comment);
         }
 
-        public void DeleteClient(int id)
+        public async Task DeleteClientAsync(int id)
         {
-            _clientRepository.DeleteClient(id);
+           await _clientRepository.DeleteClientAsync(id);
         }
 
-        public Client GetClientById(int id)
+        public async Task<Client> GetClientByIdAsync(int id)
         {
-           return _clientRepository.GetClientById(id);  
+            return await _clientRepository.GetClientByIdAsync(id);
         }
 
-        public IEnumerable<Client> GetClients()
+        public async Task<IEnumerable<Client>> GetClientsAsync()
         {
-            return _clientRepository.GetClients();
+            return await _clientRepository.GetClientsAsync();
         }
 
-        public void UpdateClient(int id, Client client)
+        public async Task UpdateClientAsync(int id, Client client)
         {
-            _clientRepository.UpdateClient(id, client);
+           await _clientRepository.UpdateClientAsync(id, client);
         }
-        public IEnumerable<Comment> GetComments(int id)
+        public async Task<IEnumerable<Comment>> GetCommentsAsync(int id)
         {
-            return _clientRepository.GetAllComments(id);
+            return await _clientRepository.GetAllCommentsAsync(id);
         }
     }
 }

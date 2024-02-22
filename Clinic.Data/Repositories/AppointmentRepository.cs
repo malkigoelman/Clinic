@@ -12,33 +12,33 @@ namespace Mirpaha.Clinic.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public Appointment AddAppointment(Appointment appointment)
+        public async Task<Appointment> AddAppointmentAsync(Appointment appointment)
         {
             _dataContext.Appointments.Add(appointment);
-            _dataContext.SaveChanges();
+           await _dataContext.SaveChangesAsync();
             return appointment;
         }
 
-        public void DeleteAppointment(int id)
+        public async Task DeleteAppointmentAsync(int id)
         {
-            var appointment=GetAppointmentById(id);
+            var appointment=await GetAppointmentByIdAsync(id);
             _dataContext.Appointments.Remove(appointment);
-            _dataContext.SaveChanges();
+           await _dataContext.SaveChangesAsync();
         }
 
-        public Appointment GetAppointmentById(int id)
+        public async Task<Appointment> GetAppointmentByIdAsync(int id)
         {
-            return _dataContext.Appointments.Find(id);
+            return await _dataContext.Appointments.FindAsync(id);
         }
 
-        public IEnumerable<Appointment> GetAppointments()
+        public async Task<IEnumerable<Appointment>> GetAppointmentsAsync()
         {
-            return _dataContext.Appointments.Include(u => u.Doctor).Include(u=>u.Client);
+            return await _dataContext.Appointments.Include(u => u.Doctor).Include(u=>u.Client).ToListAsync();
         }
 
-        public Appointment UpdateAppointment(int id, Appointment appointment)
+        public async Task<Appointment> UpdateAppointmentAsync(int id, Appointment appointment)
         {
-            var appointment1 = GetAppointmentById(id);
+            var appointment1 =await GetAppointmentByIdAsync(id);
             appointment1.Treatment = appointment.Treatment;
             appointment1.Price=appointment.Price;
             appointment1.Date_Time = appointment.Date_Time;
@@ -46,7 +46,7 @@ namespace Mirpaha.Clinic.Data.Repositories
             appointment1.Room=appointment.Room;
             appointment1.ClientId=appointment.ClientId;
             appointment1.DoctorId=appointment.DoctorId;
-            _dataContext.SaveChanges();
+           await _dataContext.SaveChangesAsync();
             return appointment1;
         }
     }

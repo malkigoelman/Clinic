@@ -4,12 +4,12 @@ namespace Mirpaha.Clinic.Core.Repositories
 {
     public interface IClientRepository
     {
-        IEnumerable<Client> GetClients();
-        Client GetClientById(int id);
-        void DeleteClient(int id);
-        Client UpdateClient(int id,Client client);
-        Client AddClient(Client client);
-        Comment AddComments(int id, Comment comment);
-        IEnumerable<Comment> GetAllComments(int id);
+        Task<Client> AddClientAsync(Client client);
+        Task<IEnumerable<Client>> GetClientsAsync();
+        Task<Client> GetClientByIdAsync(int id);
+        Task DeleteClientAsync(int id);
+        Task<Client> UpdateClientAsync(int id, Client client);
+        Task<Comment> AddCommentsAsync(int id, Comment comment);
+        Task<IEnumerable<Comment>> GetAllCommentsAsync(int id);
     }
 }
